@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use phpDocumentor\Reflection\Types\This;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -41,4 +43,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function  questions()
+    {
+        return $this-> hasMany(Question::class);
+    }
+    public function setTitleAttribute($value)
+    {
+        $this-> attribute['title']= $value;
+        $this-> attribute['slug']= str::slug($value);
+    }
 }
